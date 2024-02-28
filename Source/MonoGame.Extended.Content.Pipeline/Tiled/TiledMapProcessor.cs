@@ -92,8 +92,15 @@ namespace MonoGame.Extended.Content.Pipeline.Tiled
 					if (string.IsNullOrWhiteSpace(tileset.Source))
 					{
                         // Load the Texture2DContent for the tileset as it will be saved into the map content file.
-                        contentItem.BuildExternalReference<Texture2DContent>(context, tileset.Image);
-                    }
+                        //var externalReference = new ExternalReference<Texture2DContent>(tileset.Image.Source);
+                        var parameters = new OpaqueDataDictionary
+                        {
+                            { "ColorKeyColor", tileset.Image.TransparentColor },
+                            { "ColorKeyEnabled", true }
+                        };
+                        //tileset.Image.ContentRef = context.BuildAsset<Texture2DContent, Texture2DContent>(externalReference, "", parameters, "", "");
+                        contentItem.BuildExternalReference<Texture2DContent>(context, tileset.Image.Source, parameters);
+					}
 					else
 					{
 					    // Link to the tileset for the content loader to load at runtime.
@@ -122,8 +129,15 @@ namespace MonoGame.Extended.Content.Pipeline.Tiled
 				{
 				    case TiledMapImageLayerContent imageLayer:
 				        ContentLogger.Log($"Processing image layer '{imageLayer.Name}'");
-                        contentItem.BuildExternalReference<Texture2DContent>(context, imageLayer.Image);
-                        ContentLogger.Log($"Processed image layer '{imageLayer.Name}'");
+				        //var externalReference = new ExternalReference<Texture2DContent>(imageLayer.Image.Source);
+				        var parameters = new OpaqueDataDictionary
+				        {
+				            { "ColorKeyColor", imageLayer.Image.TransparentColor },
+				            { "ColorKeyEnabled", true }
+				        };
+				        //imageLayer.Image.ContentRef = context.BuildAsset<Texture2DContent, Texture2DContent>(externalReference, "", parameters, "", "");
+				        contentItem.BuildExternalReference<Texture2DContent>(context, imageLayer.Image.Source, parameters);
+				        ContentLogger.Log($"Processed image layer '{imageLayer.Name}'");
 				        break;
 
 				    case TiledMapTileLayerContent tileLayer when tileLayer.Data.Chunks.Count > 0:
