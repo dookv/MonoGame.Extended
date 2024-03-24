@@ -87,6 +87,8 @@ namespace MonoGame.Extended.Content.Pipeline.Tiled
             writer.Write(layer.Opacity);
             writer.Write(layer.OffsetX);
             writer.Write(layer.OffsetY);
+            writer.Write(layer.ParallaxX);
+            writer.Write(layer.ParallaxY);
 
             writer.WriteTiledMapProperties(layer.Properties);
 
@@ -152,7 +154,7 @@ namespace MonoGame.Extended.Content.Pipeline.Tiled
 
             writer.Write(@object.Identifier);
             writer.Write(@object.Name ?? string.Empty);
-            writer.Write(@object.Type ?? string.Empty);
+            writer.Write(@object.Class ?? @object.Type ?? string.Empty);
             writer.Write(@object.X);
             writer.Write(@object.Y);
             writer.Write(@object.Width);
@@ -215,7 +217,7 @@ namespace MonoGame.Extended.Content.Pipeline.Tiled
 
             return TiledMapObjectType.Rectangle;
         }
-        
+
         public override string GetRuntimeType(TargetPlatform targetPlatform) => "MonoGame.Extended.Tiled.TiledMap, MonoGame.Extended.Tiled";
 
         public override string GetRuntimeReader(TargetPlatform targetPlatform) => "MonoGame.Extended.Tiled.TiledMapReader, MonoGame.Extended.Tiled";
